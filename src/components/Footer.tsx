@@ -1,0 +1,192 @@
+"use client";
+
+import Image from "next/image";
+import { useState, type FormEvent } from "react";
+import { ArrowRightIcon, FacebookIcon, InstagramIcon, MailIcon, TikTokIcon, YouTubeIcon } from "./icons";
+
+const COLUMNS = [
+  {
+    title: "Produtos",
+    links: [
+      { label: "Todos os produtos", href: "#produtos" },
+      { label: "Sabores", href: "#pringles-hot" },
+      { label: "Promoções", href: "#promocoes" },
+    ],
+  },
+  {
+    title: "Sobre a Pringles",
+    links: [
+      { label: "A nossa marca", href: "#marca" },
+      { label: "História da Pringles", href: "#marca" },
+      { label: "Contactos", href: "#contactos" },
+    ],
+  },
+  {
+    title: "Ajuda",
+    links: [
+      { label: "FAQ", href: "#" },
+      { label: "Mapa do site", href: "#" },
+      { label: "A minha conta", href: "#" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Avisos legais", href: "#" },
+      { label: "Política de privacidade", href: "#" },
+      { label: "Termos e condições", href: "#" },
+      { label: "Cookies", href: "#" },
+    ],
+  },
+];
+
+const SOCIALS = [
+  { label: "Instagram", href: "https://www.instagram.com/pringles/", icon: InstagramIcon },
+  { label: "TikTok", href: "https://www.tiktok.com/@pringles", icon: TikTokIcon },
+  { label: "YouTube", href: "https://www.youtube.com/@pringles", icon: YouTubeIcon },
+  { label: "Facebook", href: "https://www.facebook.com/pringles", icon: FacebookIcon },
+];
+
+const BOTTOM_LINKS = ["Privacidade", "Cookies", "Termos"];
+
+export default function Footer() {
+  const [subscribed, setSubscribed] = useState(false);
+
+  // Ainda sem ligação a um serviço de newsletter: só confirma no ecrã
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSubscribed(true);
+    event.currentTarget.reset();
+  }
+
+  return (
+    <footer
+      id="contactos"
+      className="relative isolate overflow-hidden bg-[radial-gradient(ellipse_at_top,#d6061c_0%,#bb0316_55%,#a80212_100%)] text-white"
+    >
+      {/* Batatas decorativas nas laterais */}
+      <Image
+        src="/images/rodape-batatas-esq.png"
+        alt=""
+        width={190}
+        height={724}
+        unoptimized
+        className="pointer-events-none absolute top-0 left-0 -z-10 hidden h-full w-auto [mask-image:linear-gradient(to_right,#000_65%,transparent)] md:block"
+      />
+      <Image
+        src="/images/rodape-batatas-dir.png"
+        alt=""
+        width={172}
+        height={724}
+        unoptimized
+        className="pointer-events-none absolute top-0 right-0 -z-10 hidden h-full w-auto [mask-image:linear-gradient(to_left,#000_65%,transparent)] md:block"
+      />
+
+      <div className="mx-auto max-w-[1600px] px-5 md:px-[8%]">
+        {/* Topo: marca + newsletter */}
+        <div className="flex flex-col gap-10 border-b border-white/20 py-12 lg:flex-row lg:items-center lg:justify-between lg:gap-16 lg:py-14">
+          <div className="flex items-center gap-6 md:gap-10">
+            <Image
+              src="/images/logo-pringles.png"
+              alt="Pringles"
+              width={98}
+              height={108}
+              unoptimized
+              className="h-20 w-auto md:h-28"
+            />
+            <span className="h-16 w-px bg-white/30 md:h-20" aria-hidden />
+            <p className="-rotate-3 font-rounded font-extrabold italic leading-[0.95] text-[clamp(1.8rem,2.4vw,2.6rem)]">
+              Sabores que
+              <br />
+              <span className="pl-[1.1em]">fazem sorrir.</span>
+            </p>
+          </div>
+
+          <div className="w-full lg:max-w-[46rem]">
+            <h2 className="font-rounded text-2xl font-extrabold">Recebe novidades e promoções</h2>
+            <p className="mt-1 text-sm text-white/90 md:text-base">
+              Fica a par de todas as novidades, sabores e ofertas especiais.
+            </p>
+
+            <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-3 sm:flex-row sm:gap-5">
+              <label className="flex flex-1 items-center gap-4 rounded-full border-[1.5px] border-white/80 px-6 py-3.5 transition focus-within:border-white focus-within:bg-white/10">
+                <MailIcon className="size-5 shrink-0" />
+                <span className="sr-only">O teu email</span>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="O teu email"
+                  autoComplete="email"
+                  className="w-full bg-transparent text-base text-white placeholder:text-white/85 focus:outline-none"
+                />
+              </label>
+              <button
+                type="submit"
+                className="group inline-flex items-center justify-center gap-4 rounded-full bg-white px-10 py-3.5 font-display text-sm font-extrabold uppercase tracking-wide text-pringles-red shadow-[0_10px_24px_-10px_rgba(0,0,0,.45)] transition hover:bg-pringles-yellow hover:text-neutral-950"
+              >
+                Subscrever
+                <ArrowRightIcon className="size-5 transition group-hover:translate-x-1" />
+              </button>
+            </form>
+            <p role="status" className="mt-3 min-h-5 text-sm font-semibold text-pringles-yellow">
+              {subscribed ? "Obrigado! Vais receber as nossas novidades." : ""}
+            </p>
+          </div>
+        </div>
+
+        {/* Colunas de links */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-12 md:grid-cols-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_auto] lg:gap-x-10 lg:py-14">
+          {COLUMNS.map((column) => (
+            <nav key={column.title} aria-label={column.title}>
+              <h3 className="font-rounded text-lg font-extrabold uppercase tracking-wide md:text-xl">{column.title}</h3>
+              <ul className="mt-4 space-y-2.5">
+                {column.links.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} className="text-[15px] text-white/95 transition hover:text-pringles-yellow md:text-base">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+
+          <div className="col-span-2 md:col-span-4 lg:col-span-1 lg:border-l lg:border-white/30 lg:pl-14">
+            <h3 className="font-rounded text-lg font-extrabold uppercase tracking-wide md:text-xl">Segue-nos</h3>
+            <ul className="mt-4 flex gap-4">
+              {SOCIALS.map(({ label, href, icon: Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="flex size-12 items-center justify-center rounded-full bg-white text-pringles-red transition hover:-translate-y-0.5 hover:bg-pringles-yellow hover:text-neutral-950"
+                  >
+                    <Icon className="size-6" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Linha final */}
+        <div className="flex flex-col gap-4 border-t border-white/20 py-7 text-sm text-white/90 md:flex-row md:items-center md:justify-between">
+          <p>© {new Date().getFullYear()} Kellanova / Pringles. Todos os direitos reservados.</p>
+          <ul className="flex items-center">
+            {BOTTOM_LINKS.map((label, i) => (
+              <li key={label} className="flex items-center">
+                {i > 0 && <span className="mx-5 h-4 w-px bg-white/50 md:mx-7" aria-hidden />}
+                <a href="#" className="transition hover:text-pringles-yellow">
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </footer>
+  );
+}
