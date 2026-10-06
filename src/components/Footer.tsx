@@ -60,32 +60,26 @@ export default function Footer() {
   }
 
   return (
-    <footer
-      id="contactos"
-      className="relative isolate overflow-hidden bg-[radial-gradient(ellipse_at_top,#d6061c_0%,#bb0316_55%,#a80212_100%)] text-white"
-    >
-      {/* Batatas decorativas nas laterais */}
-      <Image
-        src="/images/rodape-batatas-esq.png"
-        alt=""
-        width={190}
-        height={724}
-        unoptimized
-        className="pointer-events-none absolute top-0 left-0 -z-10 hidden h-full w-auto [mask-image:linear-gradient(to_right,#000_65%,transparent)] md:block"
-      />
-      <Image
-        src="/images/rodape-batatas-dir.png"
-        alt=""
-        width={172}
-        height={724}
-        unoptimized
-        className="pointer-events-none absolute top-0 right-0 -z-10 hidden h-full w-auto [mask-image:linear-gradient(to_left,#000_65%,transparent)] md:block"
-      />
+    <footer id="contactos" className="text-white">
+      {/* Faixa da newsletter: continua a seção de cima (vermelho vivo, curva e batatas) */}
+      {/* Onda no topo: só a parte vermelha é desenhada, por cima da seção de cima (sem faixa de cor a fazer emenda) */}
+      <svg
+        viewBox="0 0 1440 60"
+        preserveAspectRatio="none"
+        className="pointer-events-none relative z-10 -mt-[clamp(3rem,5.5cqw,6rem)] -mb-px block h-[clamp(3rem,5.5cqw,6rem)] w-full"
+        aria-hidden
+      >
+        <path d="M0 54 C 50 54, 110 53, 190 47 C 330 36, 460 3, 620 3 C 780 3, 920 42, 1080 51 C 1170 55, 1300 57, 1440 56 L1440 60 L0 60 Z" fill="#d8081e" />
+      </svg>
+      <div className="relative isolate overflow-hidden bg-linear-to-b from-[#d8081e] to-[#b80318]">
 
-      <div className="mx-auto max-w-[1600px] px-5 md:px-[8%]">
-        {/* Topo: marca + newsletter */}
-        <div className="flex flex-col gap-10 border-b border-white/20 py-12 lg:flex-row lg:items-center lg:justify-between lg:gap-16 lg:py-14">
-          <div className="flex items-center gap-6 md:gap-10">
+      {/* Batatas decorativas nos cantos (sem farelos) */}
+      <Image src="/images/rodape-batata-2.png" alt="" width={142} height={184} unoptimized className="pointer-events-none absolute hidden drop-shadow-[0_10px_14px_rgba(0,0,0,.3)] md:block bottom-0 left-0 w-[clamp(4rem,7cqw,7.5rem)] translate-y-[18%]" />
+      <Image src="/images/rodape-batata-3.png" alt="" width={168} height={141} unoptimized className="pointer-events-none absolute hidden drop-shadow-[0_10px_14px_rgba(0,0,0,.3)] md:block top-[24%] right-0 w-[clamp(4.5rem,8cqw,8.5rem)]" />
+
+      <div className="relative mx-auto max-w-[1600px] px-5 md:px-[8%]">
+        <div className="flex flex-col gap-10 pt-[clamp(1.5rem,2.5cqw,2.5rem)] pb-[clamp(2.5rem,3.5cqw,3.5rem)] lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+          <div className="flex shrink-0 items-center gap-6 md:gap-8">
             <Image
               src="/images/logo-pringles.png"
               alt="Pringles"
@@ -95,14 +89,14 @@ export default function Footer() {
               className="h-20 w-auto md:h-28"
             />
             <span className="h-16 w-px bg-white/30 md:h-20" aria-hidden />
-            <p className="-rotate-3 font-rounded font-extrabold italic leading-[0.95] text-[clamp(1.8rem,2.4vw,2.6rem)]">
+            <p className="-rotate-3 whitespace-nowrap font-rounded font-extrabold italic leading-[0.95] text-[clamp(1.6rem,2.1vw,2.4rem)]">
               Sabores que
               <br />
               <span className="pl-[1.1em]">fazem sorrir.</span>
             </p>
           </div>
 
-          <div className="w-full lg:max-w-[46rem]">
+          <div className="w-full min-w-0 lg:max-w-[44rem]">
             <h2 className="font-rounded text-2xl font-extrabold">Recebe novidades e promoções</h2>
             <p className="mt-1 text-sm text-white/90 md:text-base">
               Fica a par de todas as novidades, sabores e ofertas especiais.
@@ -129,14 +123,19 @@ export default function Footer() {
                 <ArrowRightIcon className="size-5 transition group-hover:translate-x-1" />
               </button>
             </form>
-            <p role="status" className="mt-3 min-h-5 text-sm font-semibold text-pringles-yellow">
+            <p role="status" className="mt-2 min-h-5 text-sm font-semibold text-pringles-yellow">
               {subscribed ? "Obrigado! Vais receber as nossas novidades." : ""}
             </p>
           </div>
         </div>
+      </div>
+      </div>
 
+      {/* Rodapé de links: vermelho um pouco mais escuro */}
+      <div className="bg-[#a3020f]">
+      <div className="mx-auto max-w-[1600px] px-5 md:px-[8%]">
         {/* Colunas de links */}
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-12 md:grid-cols-4 lg:grid-cols-[repeat(4,minmax(0,1fr))_auto] lg:gap-x-10 lg:py-14">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-12 md:grid-cols-4 lg:gap-x-10 xl:grid-cols-[repeat(4,minmax(0,1fr))_auto] lg:py-14">
           {COLUMNS.map((column) => (
             <nav key={column.title} aria-label={column.title}>
               <h3 className="font-rounded text-lg font-extrabold uppercase tracking-wide md:text-xl">{column.title}</h3>
@@ -152,7 +151,7 @@ export default function Footer() {
             </nav>
           ))}
 
-          <div className="col-span-2 md:col-span-4 lg:col-span-1 lg:border-l lg:border-white/30 lg:pl-14">
+          <div className="col-span-2 md:col-span-4 xl:col-span-1 xl:border-l xl:border-white/30 xl:pl-14">
             <h3 className="font-rounded text-lg font-extrabold uppercase tracking-wide md:text-xl">Segue-nos</h3>
             <ul className="mt-4 flex gap-4">
               {SOCIALS.map(({ label, href, icon: Icon }) => (
@@ -186,6 +185,7 @@ export default function Footer() {
             ))}
           </ul>
         </div>
+      </div>
       </div>
     </footer>
   );

@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -7,19 +6,10 @@ import PromoFutebol from "@/components/PromoFutebol";
 import PromoVerao from "@/components/PromoVerao";
 import PringlesHot from "@/components/PringlesHot";
 import NossaMarca from "@/components/NossaMarca";
+import MaisMomentos from "@/components/MaisMomentos";
 import NossosProdutos from "@/components/NossosProdutos";
 import SectionDivider from "@/components/SectionDivider";
-
-/** Mostra uma seção dentro de um container centralizado, com fundo branco à volta. */
-function Contained({ children }: { children: ReactNode }) {
-  return (
-    <div className="bg-white px-4 py-10 md:px-8 md:py-16">
-      <div className="@container mx-auto w-full max-w-[1440px] shadow-[0_40px_90px_-50px_rgba(0,0,0,.45)]">
-        {children}
-      </div>
-    </div>
-  );
-}
+import ScrollReveal from "@/components/ScrollReveal";
 
 export default function Home() {
   return (
@@ -28,25 +18,22 @@ export default function Home() {
       <Header />
       <Hero />
 
-      <SectionDivider variant="slant" />
+      <MaisMomentos />
       <PromoBurgerKing />
 
-      <Contained>
-        <PromoVerao />
-      </Contained>
+      <PromoVerao />
 
       <PromoFutebol />
 
-      <SectionDivider variant="swoosh" tone="dark" />
+      <SectionDivider variant="dip" tone="hot" />
       <PringlesHot />
 
-      <Contained>
-        <NossosProdutos />
-      </Contained>
+      <NossosProdutos />
 
       <NossaMarca />
 
       <Footer />
+      <ScrollReveal />
     </main>
   );
 }
