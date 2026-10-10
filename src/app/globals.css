@@ -284,6 +284,16 @@ body {
   .float-bob {
     animation: hero-bob 4s ease-in-out var(--d, 0ms) infinite alternate;
   }
+
+  /* Lata do sabor escolhido na hero a "piscar" */
+  .flavor-glow {
+    animation: flavor-glow 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes flavor-glow {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.15); }
 }
 
 @keyframes flicker {
