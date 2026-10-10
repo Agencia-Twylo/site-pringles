@@ -1,5 +1,5 @@
-type Variant = "wave" | "slant" | "torn" | "swoosh";
-type Tone = "red" | "dark" | "cream";
+type Variant = "wave" | "slant" | "torn" | "swoosh" | "dip";
+type Tone = "red" | "dark" | "cream" | "hot";
 
 type SectionDividerProps = {
   /** Forma da transição */
@@ -14,6 +14,8 @@ const TONES: Record<Tone, { main: string; back: string; mark: string }> = {
   red: { main: "#e3141c", back: "#8f0a12", mark: "bg-pringles-yellow" },
   dark: { main: "#140707", back: "#e3141c", mark: "bg-pringles-red" },
   cream: { main: "#f3ede6", back: "#e3141c", mark: "bg-pringles-red" },
+  // Mesma cor do topo da seção Pringles HOT: a faixa funde-se com ela, sem emenda
+  hot: { main: "#0a0000", back: "#e3141c", mark: "" },
 };
 
 // Borda rasgada: pontos fixos (sem aleatoriedade) para o servidor e o cliente gerarem o mesmo SVG
@@ -27,6 +29,11 @@ function tornEdge(baseY: number, amp: number, seed: number, reverse = false) {
 }
 
 const SHAPES: Record<Variant, { back: string; main: string; highlight?: string }> = {
+  // Onda que desce ao centro (linha vermelha fina por cima da seção de baixo)
+  dip: {
+    back: "M0 8 C 150 10, 250 30, 400 45 C 520 62, 640 66, 820 64 C 920 62, 980 40, 1100 22 C 1220 8, 1340 6, 1440 6 L 1440 90 L 0 90 Z",
+    main: "M0 14 C 150 16, 250 36, 400 51 C 520 68, 640 72, 820 70 C 920 68, 980 46, 1100 28 C 1220 14, 1340 12, 1440 12 L 1440 120 L 0 120 Z",
+  },
   // Onda suave e assimétrica
   wave: {
     back: "M0 26 C 260 4, 520 6, 780 34 S 1240 70, 1440 12 L 1440 104 C 1180 116, 940 82, 700 96 S 230 124, 0 100 Z",
@@ -61,13 +68,16 @@ export default function SectionDivider({ variant = "wave", tone = "red", flip = 
 
   return (
     <div
-      className="pointer-events-none relative z-20 -my-[clamp(1.75rem,2.6cqw,2.75rem)] h-[clamp(3.75rem,5.6cqw,6rem)]"
+      className={`pointer-events-none relative z-20 h-[clamp(3.75rem,5.6cqw,6rem)] ${
+        // na onda "dip" a seção de cima tem de ir até ao fundo da curva, por isso o divisor sobe mais
+        variant === "dip" ? "-mt-[clamp(3rem,4.5cqw,4.75rem)] -mb-[clamp(.75rem,1.1cqw,1.25rem)]" : "-my-[clamp(1.75rem,2.6cqw,2.75rem)]"
+      }`}
       aria-hidden
     >
       <svg
         viewBox="0 0 1440 120"
         preserveAspectRatio="none"
-        className={`absolute inset-0 h-full w-full drop-shadow-[0_8px_14px_rgba(0,0,0,.35)] ${flip ? "-scale-x-100" : ""}`}
+        className={`absolute inset-x-0 top-0 h-[calc(100%+3px)] w-full ${tone === "hot" ? "" : "drop-shadow-[0_8px_14px_rgba(0,0,0,.35)]"} ${flip ? "-scale-x-100" : ""}`}
       >
         <path d={shape.back} fill={colors.back} />
         <path d={shape.main} fill={colors.main} />
@@ -83,6 +93,7 @@ export default function SectionDivider({ variant = "wave", tone = "red", flip = 
       </svg>
 
       {/* Pequena assinatura central */}
+      {tone !== "hot" && (
       <span
         className={`absolute left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 ${
           variant === "swoosh" ? "top-[62%]" : "top-1/2"
@@ -92,6 +103,7 @@ export default function SectionDivider({ variant = "wave", tone = "red", flip = 
         <span className={`size-[clamp(.55rem,.7cqw,.75rem)] rotate-45 ${colors.mark}`} />
         <span className={`h-px w-[clamp(1.25rem,2.5cqw,2.5rem)] ${tone === "cream" ? "bg-neutral-900/30" : "bg-white/50"}`} />
       </span>
+      )}
     </div>
   );
 }

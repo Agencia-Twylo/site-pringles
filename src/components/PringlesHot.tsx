@@ -2,15 +2,16 @@
 
 import Image from "next/image";
 import { useState, type CSSProperties } from "react";
+import { delay } from "@/lib/motion";
 import { ArrowRightIcon, ChiliIcon, FlameIcon } from "./icons";
 
-// `x` = centro horizontal de cada lata na imagem 5-1.png (em % da largura)
+// `x` = centro horizontal de cada lata na imagem 5-3.png (em % da largura)
 const HOT_FLAVORS = [
-  { name: ["Sweet", "Chilli"], level: 1, x: "48.4%" },
-  { name: ["Mexican", "Chilli & Lime"], level: 2, x: "57.8%" },
-  { name: ["Cheese & Chilli"], level: 3, x: "67.9%" },
-  { name: ["Kickin'", "Sour Cream"], level: 4, x: "78.3%" },
-  { name: ["Smokin'", "BBQ Ribs"], level: 5, x: "88.6%" },
+  { name: ["Sweet", "Chilli"], level: 1, x: "9.5%" },
+  { name: ["Mexican", "Chilli & Lime"], level: 2, x: "18.7%" },
+  { name: ["Cheese &", "Chilli"], level: 3, x: "28.9%" },
+  { name: ["Kickin'", "Sour Cream"], level: 4, x: "39%" },
+  { name: ["Smokin'", "BBQ Ribs"], level: 5, x: "48.4%" },
 ];
 
 export default function PringlesHot() {
@@ -19,36 +20,40 @@ export default function PringlesHot() {
   return (
     <section
       id="pringles-hot"
-      className="relative isolate flex flex-col overflow-hidden bg-[#0b0505] text-white lg:block lg:aspect-[1855/848]"
+      className="relative isolate flex flex-col overflow-hidden bg-[#0a0000] text-white lg:block lg:aspect-[1855/848]"
     >
-      {/* Fundo: no desktop cobre a seção toda; no mobile fica abaixo do texto */}
-      <div className="relative aspect-[4/3] w-full lg:absolute lg:inset-0 lg:-z-10 lg:aspect-auto">
+      {/* Fundo: no mobile fica abaixo do texto; no desktop cobre a seção toda. O topo funde-se
+          com a cor da onda de transição (#0a0000) por um degradê, sem emendas */}
+      <div className="relative aspect-[4/3] w-full sm:aspect-[16/10] lg:absolute lg:inset-0 lg:-z-10 lg:aspect-auto">
         <Image
-          src="/5-1.png"
+          src="/5-3.png"
           alt="As cinco latas Pringles HOT lado a lado com malaguetas, lima, queijo e molhos"
           fill
-          sizes="(min-width: 1500px) 1440px, 100vw"
-          className="object-cover object-[70%_center] lg:object-center"
+          sizes="(min-width: 1024px) 100vw, 200vw"
+          quality={90}
+          className="object-cover object-[5%_center] lg:object-center"
         />
+        <div className="absolute inset-x-0 top-0 hidden h-[22%] bg-linear-to-b from-[#0a0000] to-transparent lg:block" />
       </div>
 
       {/* Conteúdo */}
-      <div className="relative -order-1 flex w-full flex-col justify-center px-5 pt-14 pb-10 lg:absolute lg:inset-y-0 lg:left-0 lg:w-[38%] lg:px-0 lg:pt-[3cqw] lg:pb-[6cqw] lg:pl-[3.6%]">
-        <p className="relative w-fit -rotate-12 origin-left font-marker uppercase text-pringles-red text-[clamp(1.4rem,2.2cqw,2.5rem)] leading-none lg:ml-[1.5cqw]">
+      <div className="relative -order-1 flex w-full flex-col justify-center px-5 pt-14 pb-10 lg:items-end lg:text-right lg:absolute lg:inset-y-0 lg:right-0 lg:w-[44%] lg:px-0 lg:pt-[3cqw] lg:pb-[6cqw] lg:pr-[8%]">
+        <p data-reveal="pop" className="relative w-fit -rotate-12 origin-left font-marker uppercase text-pringles-red text-[clamp(1.4rem,2.2cqw,2.5rem)] leading-none lg:origin-right lg:mr-[1.5cqw]">
           Pringles Hot
-          <FlameIcon className="ml-1 inline-block h-[1.1em] w-auto -translate-y-[0.35em]" />
+          <FlameIcon className="flicker ml-1 inline-block h-[1.1em] w-auto -translate-y-[0.35em]" />
           <span className="absolute -bottom-[0.3em] left-0 h-[0.12em] w-[110%] -rotate-2 rounded-full bg-pringles-red" aria-hidden />
         </p>
 
-        <h2 className="mt-[clamp(1.25rem,2.2cqw,2.5rem)] -rotate-[8deg] origin-left font-display font-black uppercase italic leading-[0.92] tracking-[-0.03em] text-[clamp(2.8rem,5.4cqw,6.5rem)]">
-          <span className="text-grunge block drop-shadow-[0_6px_18px_rgba(0,0,0,.5)]">Qual é o</span>
-          <span className="relative block w-fit">
-            <span className="text-grunge relative z-10 drop-shadow-[0_6px_18px_rgba(0,0,0,.5)]">Seu Hot?</span>
+        <h2 className="mt-[clamp(1.25rem,2.2cqw,2.5rem)] -rotate-[8deg] origin-left lg:origin-right font-display font-black uppercase italic leading-[0.92] tracking-[-0.03em] text-[clamp(2.5rem,4.6cqw,5.6rem)]">
+          <span data-reveal="right" style={delay(120)} className="text-grunge block drop-shadow-[0_6px_18px_rgba(0,0,0,.5)]">Qual é o</span>
+          <span data-reveal="right" style={delay(240)} className="text-grunge block drop-shadow-[0_6px_18px_rgba(0,0,0,.5)]">Seu Hot</span>
+          <span data-reveal="right" style={delay(360)} className="relative block w-fit lg:ml-auto">
+            <span className="text-grunge relative z-10 drop-shadow-[0_6px_18px_rgba(0,0,0,.5)]">Favorito?</span>
             {/* Traço de pincel vermelho */}
             <svg
               viewBox="0 0 600 40"
               preserveAspectRatio="none"
-              className="absolute -bottom-[0.12em] left-[6%] h-[0.16em] w-[100%] text-pringles-red"
+              className="absolute -bottom-[0.12em] left-[6%] h-[0.16em] w-[100%] text-pringles-red lg:right-[2%] lg:left-auto"
               aria-hidden
             >
               <path d="M2 34 C150 22 360 10 598 2 L596 12 C400 18 210 28 60 38 Z" fill="currentColor" />
@@ -56,22 +61,24 @@ export default function PringlesHot() {
           </span>
         </h2>
 
-        <p className="mt-[clamp(1.5rem,2.4cqw,2.75rem)] font-sans leading-snug text-white/95 text-[clamp(1.05rem,1.3cqw,1.55rem)]">
+        <p data-reveal="up" style={delay(500)} className="mt-[clamp(1.5rem,2.4cqw,2.75rem)] lg:mt-[clamp(2.5rem,5cqw,5.5rem)] font-sans leading-snug text-white/95 text-[clamp(1.05rem,1.3cqw,1.55rem)]">
           5 sabores. 5 níveis de picância.
           <br />
           Escolhe o teu favorito.
         </p>
 
+        <div data-reveal="pop" style={delay(620)} className="mt-[clamp(1.25rem,1.8cqw,2rem)] w-fit">
         <a
           href="#pringles-hot"
-          className="group mt-[clamp(1.25rem,1.8cqw,2rem)] inline-flex w-fit items-center gap-5 rounded-full border-2 border-white px-8 py-3.5 font-display font-bold uppercase tracking-wider transition hover:bg-white hover:text-black text-[clamp(.8rem,.8cqw,1rem)] lg:px-[1.7cqw] lg:py-[0.9cqw]"
+          className="group inline-flex w-fit items-center gap-5 rounded-full border-2 border-white px-8 py-3.5 font-display font-bold uppercase tracking-wider transition hover:bg-white hover:text-black text-[clamp(.8rem,.8cqw,1rem)] lg:px-[1.7cqw] lg:py-[0.9cqw]"
         >
           Explorar sabores
           <ArrowRightIcon className="size-[1.5em] transition group-hover:translate-x-1" />
         </a>
+        </div>
 
-        <div className="mt-[clamp(1.75rem,3.2cqw,3.5rem)] flex items-center gap-3">
-          <FlameIcon className="h-[clamp(2rem,2.6cqw,3rem)] w-auto shrink-0 text-pringles-red" />
+        <div data-reveal="up" style={delay(750)} className="mt-[clamp(1.75rem,3.2cqw,3.5rem)] flex items-center gap-3 lg:flex-row-reverse">
+          <FlameIcon className="flicker h-[clamp(2rem,2.6cqw,3rem)] w-auto shrink-0 text-pringles-red" />
           <div>
             <p className="font-display font-bold uppercase tracking-wide text-[clamp(.9rem,.9cqw,1.1rem)]">
               Do suave ao insano.
@@ -86,8 +93,9 @@ export default function PringlesHot() {
         {HOT_FLAVORS.map((flavor, i) => (
           <li
             key={flavor.name.join(" ")}
-            style={{ "--x": flavor.x } as CSSProperties}
-            className="flex min-w-28 shrink-0 snap-start flex-col items-center text-center lg:absolute lg:top-[84%] lg:left-[var(--x)] lg:min-w-0 lg:-translate-x-1/2"
+            data-reveal="up"
+            style={delay(200 + i * 110, { "--x": flavor.x } as CSSProperties)}
+            className="flex min-w-28 shrink-0 snap-start flex-col items-center text-center lg:absolute lg:top-[80%] lg:left-[var(--x)] xl:top-[84%] lg:min-w-0 lg:-translate-x-1/2"
           >
             <button
               type="button"
@@ -100,7 +108,7 @@ export default function PringlesHot() {
                   <ChiliIcon key={n} className="h-[1em] w-auto" />
                 ))}
               </span>
-              <span className="mt-1.5 font-display font-extrabold uppercase leading-[1.15] text-[clamp(.85rem,.85cqw,1.05rem)]">
+              <span className="mt-1.5 font-display font-extrabold uppercase leading-[1.15] text-[clamp(.7rem,.85cqw,1.05rem)] max-lg:text-[.85rem]">
                 {flavor.name.map((line) => (
                   <span key={line} className="block whitespace-nowrap">
                     {line}

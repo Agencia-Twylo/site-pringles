@@ -19,7 +19,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-30">
+    <header className="hero-header absolute inset-x-0 top-0 z-30">
       <div className="mx-auto flex max-w-[1920px] items-center justify-between px-5 pt-3 md:px-[5.8%]">
         <Link href="/" aria-label="Pringles - página inicial" className="shrink-0">
           <Image
@@ -34,7 +34,7 @@ export default function Header() {
         </Link>
 
         <nav className="hidden lg:block" aria-label="Principal">
-          <ul className="flex items-center gap-12 font-display text-[15px] font-extrabold uppercase tracking-wide text-white">
+          <ul className="flex items-center gap-6 whitespace-nowrap font-display text-[13px] font-extrabold uppercase tracking-wide text-white xl:gap-12 xl:text-[15px]">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <a href={link.href} className="transition hover:text-pringles-yellow">
