@@ -1,8 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { delay } from "@/lib/motion";
 import { ArrowRightIcon, CrownIcon, PhoneIcon } from "./icons";
-
-const PROMO_URL = "https://www.pringles.com/pt/promocao-burger-king";
 
 export default function PromoBurgerKing() {
   return (
@@ -45,16 +44,14 @@ export default function PromoBurgerKing() {
           </p>
 
           <div data-reveal="pop" style={delay(600)} className="mt-[clamp(1.25rem,1.8cqw,2.25rem)] w-fit">
-          <a
-            href={PROMO_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/#hero"
             className="group inline-flex w-fit items-center gap-4 rounded-full bg-[#141414] px-7 py-3.5 font-display font-extrabold uppercase tracking-wide shadow-[0_12px_30px_rgba(0,0,0,.35)] transition hover:bg-black text-[clamp(.9rem,1cqw,1.2rem)] lg:px-[2cqw] lg:py-[0.9cqw]"
           >
             <PhoneIcon className="size-[1.4em] shrink-0" />
             Sabe mais
             <ArrowRightIcon className="size-[1.3em] text-pringles-yellow transition group-hover:translate-x-1" />
-          </a>
+          </Link>
           </div>
         </div>
       </div>
