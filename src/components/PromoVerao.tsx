@@ -27,7 +27,7 @@ export default function PromoVerao() {
       <svg
         viewBox="0 0 1440 60"
         preserveAspectRatio="none"
-        className="relative -mb-px block h-[clamp(2.5rem,6cqw,6.5rem)] w-full -mt-[clamp(2.5rem,6cqw,6.5rem)] drop-shadow-[0_-8px_14px_rgba(0,0,0,.12)]"
+        className="pointer-events-none relative -mb-px block h-[clamp(2.5rem,6cqw,6.5rem)] w-full -mt-[clamp(2.5rem,6cqw,6.5rem)] drop-shadow-[0_-8px_14px_rgba(0,0,0,.12)]"
         aria-hidden
       >
         <path d="M0 60 L0 26 C 260 30, 560 46, 860 44 C 1120 42, 1300 22, 1440 4 L1440 60 Z" fill={CREAM} />
