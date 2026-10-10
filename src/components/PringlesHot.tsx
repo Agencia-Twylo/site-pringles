@@ -5,14 +5,16 @@ import { useState, type CSSProperties } from "react";
 import { delay } from "@/lib/motion";
 import { ArrowRightIcon, ChiliIcon, FlameIcon } from "./icons";
 
-// `x` = centro horizontal de cada lata na imagem 5-3.png (em % da largura)
+// `x` = centro horizontal de cada lata na imagem pringles-hot.jpg (em % da largura).
+// `level` = malaguetas acesas na lata, numa escala de 1 a 3.
 const HOT_FLAVORS = [
-  { name: ["Sweet", "Chilli"], level: 1, x: "9.5%" },
-  { name: ["Mexican", "Chilli & Lime"], level: 2, x: "18.7%" },
-  { name: ["Cheese &", "Chilli"], level: 3, x: "28.9%" },
-  { name: ["Kickin'", "Sour Cream"], level: 4, x: "39%" },
-  { name: ["Smokin'", "BBQ Ribs"], level: 5, x: "48.4%" },
+  { name: ["Kickin'", "Sour Cream"], level: 1, x: "15.5%" },
+  { name: ["Sweet", "Chilli"], level: 1, x: "24.5%" },
+  { name: ["Flamin'", "Cheese"], level: 3, x: "34.5%" },
+  { name: ["Smokin'", "BBQ Ribs"], level: 2, x: "44.6%" },
+  { name: ["Mexican", "Chilli & Lime"], level: 2, x: "53.8%" },
 ];
+const MAX_LEVEL = 3;
 
 export default function PringlesHot() {
   const [active, setActive] = useState(0);
@@ -20,20 +22,24 @@ export default function PringlesHot() {
   return (
     <section
       id="pringles-hot"
-      className="relative isolate flex flex-col overflow-hidden bg-[#0a0000] text-white lg:block lg:aspect-[1855/848]"
+      className="relative isolate flex flex-col overflow-hidden bg-[#0a0000] text-white lg:block"
     >
+      {/* No desktop a foto tem a proporção da imagem e as legendas ficam numa faixa logo abaixo dela */}
+      <div className="contents lg:relative lg:block lg:aspect-[3072/1376]">
       {/* Fundo: no mobile fica abaixo do texto; no desktop cobre a seção toda. O topo funde-se
           com a cor da onda de transição (#0a0000) por um degradê, sem emendas */}
       <div className="relative aspect-[4/3] w-full sm:aspect-[16/10] lg:absolute lg:inset-0 lg:-z-10 lg:aspect-auto">
         <Image
-          src="/5-3.png"
-          alt="As cinco latas Pringles HOT lado a lado com malaguetas, lima, queijo e molhos"
+          src="/images/pringles-hot.jpg"
+          alt="As cinco latas Pringles HOT, com a Flamin' Cheese em destaque ao centro, rodeadas de malaguetas, lima, queijo e molhos"
           fill
           sizes="(min-width: 1024px) 100vw, 200vw"
           quality={90}
           className="object-cover object-[5%_center] lg:object-center"
         />
         <div className="absolute inset-x-0 top-0 hidden h-[22%] bg-linear-to-b from-[#0a0000] to-transparent lg:block" />
+        {/* A mesa funde-se com a faixa das legendas */}
+        <div className="absolute inset-x-0 bottom-0 hidden h-[10%] bg-linear-to-b from-transparent to-[#0a0000] lg:block" />
       </div>
 
       {/* Conteúdo */}
@@ -62,7 +68,7 @@ export default function PringlesHot() {
         </h2>
 
         <p data-reveal="up" style={delay(500)} className="mt-[clamp(1.5rem,2.4cqw,2.75rem)] lg:mt-[clamp(2.5rem,5cqw,5.5rem)] font-sans leading-snug text-white/95 text-[clamp(1.05rem,1.3cqw,1.55rem)]">
-          5 sabores. 5 níveis de picância.
+          5 sabores. 3 níveis de picância.
           <br />
           Escolhe o teu favorito.
         </p>
@@ -87,15 +93,16 @@ export default function PringlesHot() {
           </div>
         </div>
       </div>
+      </div>
 
       {/* Nomes dos sabores sob cada lata */}
-      <ul className="flex snap-x gap-6 overflow-x-auto px-5 pt-6 pb-10 lg:contents">
+      <ul className="flex snap-x gap-6 overflow-x-auto px-5 pt-6 pb-10 lg:relative lg:block lg:h-[clamp(6.5rem,8.5cqw,10rem)] lg:overflow-visible lg:p-0">
         {HOT_FLAVORS.map((flavor, i) => (
           <li
             key={flavor.name.join(" ")}
             data-reveal="up"
             style={delay(200 + i * 110, { "--x": flavor.x } as CSSProperties)}
-            className="flex min-w-28 shrink-0 snap-start flex-col items-center text-center lg:absolute lg:top-[80%] lg:left-[var(--x)] xl:top-[84%] lg:min-w-0 lg:-translate-x-1/2"
+            className="flex min-w-28 shrink-0 snap-start flex-col items-center text-center lg:absolute lg:top-0 lg:left-[var(--x)] lg:min-w-0 lg:-translate-x-1/2"
           >
             <button
               type="button"
@@ -103,9 +110,9 @@ export default function PringlesHot() {
               aria-pressed={active === i}
               className={`flex flex-col items-center transition ${active === i ? "opacity-100" : "opacity-80 hover:opacity-100"}`}
             >
-              <span className="flex h-[1.4em] items-end gap-[1px] text-[clamp(1rem,1.15cqw,1.4rem)] text-pringles-red" aria-label={`Nível de picância ${flavor.level} de 5`}>
-                {Array.from({ length: flavor.level }, (_, n) => (
-                  <ChiliIcon key={n} className="h-[1em] w-auto" />
+              <span className="flex h-[1.4em] items-end gap-[1px] text-[clamp(1rem,1.15cqw,1.4rem)]" aria-label={`Nível de picância ${flavor.level} de ${MAX_LEVEL}`}>
+                {Array.from({ length: MAX_LEVEL }, (_, n) => (
+                  <ChiliIcon key={n} className={`h-[1em] w-auto ${n < flavor.level ? "text-pringles-red" : "text-white/25"}`} />
                 ))}
               </span>
               <span className="mt-1.5 font-display font-extrabold uppercase leading-[1.15] text-[clamp(.7rem,.85cqw,1.05rem)] max-lg:text-[.85rem]">

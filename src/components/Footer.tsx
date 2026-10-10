@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { ArrowRightIcon, FacebookIcon, InstagramIcon, MailIcon, TikTokIcon, YouTubeIcon } from "./icons";
 
@@ -41,10 +42,10 @@ const COLUMNS = [
 ];
 
 const SOCIALS = [
-  { label: "Instagram", href: "https://www.instagram.com/pringles/", icon: InstagramIcon },
-  { label: "TikTok", href: "https://www.tiktok.com/@pringles", icon: TikTokIcon },
-  { label: "YouTube", href: "https://www.youtube.com/@pringles", icon: YouTubeIcon },
-  { label: "Facebook", href: "https://www.facebook.com/pringles", icon: FacebookIcon },
+  { label: "Instagram", icon: InstagramIcon },
+  { label: "TikTok", icon: TikTokIcon },
+  { label: "YouTube", icon: YouTubeIcon },
+  { label: "Facebook", icon: FacebookIcon },
 ];
 
 const BOTTOM_LINKS = ["Privacidade", "Cookies", "Termos"];
@@ -154,17 +155,15 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-4 xl:col-span-1 xl:border-l xl:border-white/30 xl:pl-14">
             <h3 className="font-rounded text-lg font-extrabold uppercase tracking-wide md:text-xl">Segue-nos</h3>
             <ul className="mt-4 flex gap-4">
-              {SOCIALS.map(({ label, href, icon: Icon }) => (
+              {SOCIALS.map(({ label, icon: Icon }) => (
                 <li key={label}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/#hero"
                     aria-label={label}
                     className="flex size-12 items-center justify-center rounded-full bg-white text-pringles-red transition hover:-translate-y-0.5 hover:bg-pringles-yellow hover:text-neutral-950"
                   >
                     <Icon className="size-6" />
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

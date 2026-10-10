@@ -1,8 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { delay } from "@/lib/motion";
 import { ArrowRightIcon } from "./icons";
-
-const PROMO_URL = "https://www.pringles.com/pt/promocao-futebol";
 
 export default function PromoFutebol() {
   return (
@@ -40,15 +39,13 @@ export default function PromoFutebol() {
         </p>
 
         <div data-reveal="pop" style={delay(550)} className="mt-[clamp(1.25rem,2cqw,2.5rem)] w-fit">
-        <a
-          href={PROMO_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/#hero"
           className="group inline-flex w-fit items-center gap-4 rounded-full bg-pringles-red px-8 py-3.5 font-display font-extrabold uppercase tracking-wide shadow-[0_10px_28px_rgba(227,20,28,.45)] transition hover:bg-white hover:text-pringles-red text-[clamp(.85rem,1cqw,1.2rem)] lg:px-[2.2cqw] lg:py-[0.9cqw]"
         >
           Participar agora
           <ArrowRightIcon className="size-[1.3em] transition group-hover:translate-x-1" />
-        </a>
+        </Link>
         </div>
       </div>
     </section>
